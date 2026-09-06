@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Nexgen design tokens — industrial / enterprise / instrumentation
+   Dark graphite base, hairline structure, one data accent.
+------------------------------------------------------------------ */
+@theme {
+  --color-ink-950: #05070a;
+  --color-ink-900: #090c12;
+  --color-ink-850: #0c1017;
+  --color-ink-800: #11161f;
+  --color-ink-700: #1a212c;
+
+  --color-line: rgb(148 163 184 / 0.12);
+  --color-line-strong: rgb(148 163 184 / 0.24);
+
+  --color-fg: #e8ecf3;
+  --color-fg-muted: #97a1b0;
+  --color-fg-dim: #667384;
+
+  --color-signal: #3ed9c4;
+  --color-signal-dim: #1f8d80;
+  --color-amber: #f0a83c;
+  --color-alert: #f2685a;
+  --color-ok: #56d97e;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+
+  --radius-card: 14px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(62 217 196 / 0.24);
+    color: #fff;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  /* Structural blueprint grid used behind sections */
+  .grid-field {
+    background-image: linear-gradient(
+        to right,
+        rgb(148 163 184 / 0.055) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.055) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .grid-field-fine {
+    background-image: linear-gradient(
+        to right,
+        rgb(148 163 184 / 0.06) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Restrained glassmorphism: thin frost, hairline edge, top light catch */
+  .glass {
+    position: relative;
+    background: linear-gradient(
+      160deg,
+      rgb(255 255 255 / 0.055) 0%,
+      rgb(255 255 255 / 0.022) 42%,
+      rgb(255 255 255 / 0.012) 100%
+    );
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    border: 1px solid rgb(255 255 255 / 0.075);
+    border-radius: var(--radius-card);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.05) inset,
+      0 18px 40px -24px rgb(0 0 0 / 0.9);
+  }
+
+  .glass-flat {
+    background: rgb(255 255 255 / 0.028);
+    border: 1px solid rgb(255 255 255 / 0.06);
+    border-radius: var(--radius-card);
+  }
+
+  .glass-hover {
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .glass-hover:hover {
+    border-color: rgb(62 217 196 / 0.34);
+    background-color: rgb(62 217 196 / 0.035);
+    transform: translateY(-2px);
+  }
+
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-fg-dim);
+  }
+
+  .rule-x {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgb(148 163 184 / 0.22) 12%,
+      rgb(148 163 184 / 0.22) 88%,
+      transparent
+    );
+  }
+}
+
+@layer utilities {
+  .text-gradient-signal {
+    background: linear-gradient(96deg, #ffffff 12%, #9ff0e4 58%, #3ed9c4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .mask-fade-r {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+}
+
+/* ---------------------------- motion ---------------------------- */
+
+@keyframes nx-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nx-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes nx-dash {
+  to {
+    stroke-dashoffset: -160;
+  }
+}
+
+@keyframes nx-blip {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes nx-sweep {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340%);
+    opacity: 0;
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-in {
+  animation: nx-reveal 0.62s cubic-bezier(0.22, 0.68, 0.29, 1) forwards;
+}
+
+.marquee-track {
+  animation: nx-marquee 44s linear infinite;
+}
+
+.flow-dash {
+  stroke-dasharray: 5 9;
+  animation: nx-dash 3.2s linear infinite;
+}
+
+.blip {
+  animation: nx-blip 2.4s ease-in-out infinite;
+}
+
+.scan-sweep {
+  animation: nx-sweep 6.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    animation: none !important;
+  }
+
+  .marquee-track,
+  .flow-dash,
+  .blip,
+  .scan-sweep {
+    animation: none !important;
+  }
+}
