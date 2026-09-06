@@ -65,6 +65,15 @@ Resolution order, first match wins (`src/lib/i18n/geo.ts`):
 `/en` and `/id` remain directly reachable and are what `hreflang` points at, so
 each language has a crawlable URL even though `/` serves both.
 
+### On Vercel
+
+Nothing to configure — `x-vercel-ip-country` is already first in the lookup
+list, so step 2 works out of the box and detection is genuinely IP-based.
+The nginx notes below apply only to self-hosting; Vercel evaluates the
+middleware per request and serves the matching prerendered page from its
+edge cache, so the `Vary` limitation described further down is not an issue
+there.
+
 ### Getting real IP geolocation on a VPS
 
 A bare Node server sees no country header, so today step 2 is skipped and

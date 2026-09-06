@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { LOCALES, LOCALE_COOKIE } from "@/lib/i18n/config";
+import { LOCALE_COOKIE } from "@/lib/i18n/config";
 import { resolveLocale } from "@/lib/i18n/geo";
 
 /**
@@ -34,5 +34,3 @@ export const config = {
   // Only the bare root is negotiated; /en and /id are served as-is.
   matcher: "/",
 };
-
-export { LOCALES };
