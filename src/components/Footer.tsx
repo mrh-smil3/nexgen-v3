@@ -16,14 +16,14 @@ export default function Footer({ d }: { d: Dictionary["footer"] }) {
             <div className="mt-7 space-y-2.5">
               {/* TODO: replace with the published Nexgen contact details. */}
               <TrackedLink
-                href="mailto:hello@nexgen.example"
+                href="mailto:halo@nexgen.id"
                 event="email_click"
                 className="block text-[13.5px] text-fg transition-colors hover:text-signal"
               >
-                hello@nexgen.example
+                halo@nexgen.id
               </TrackedLink>
               <TrackedLink
-                href="https://wa.me/0000000000"
+                href="https://wa.me/628981511002"
                 event="whatsapp_click"
                 external
                 className="block text-[13.5px] text-fg-muted transition-colors hover:text-signal"
