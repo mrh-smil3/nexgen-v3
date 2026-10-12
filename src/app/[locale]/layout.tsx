@@ -3,6 +3,13 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { LOCALES, isLocale, getDictionary } from "@/lib/i18n";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
+import {
+  OG_LOCALE,
+  SITE_NAME,
+  SITE_URL,
+  languageAlternates,
+  localeUrl,
+} from "@/lib/site";
 import "../globals.css";
 
 const inter = Inter({
@@ -17,9 +24,6 @@ const mono = JetBrains_Mono({
   display: "swap",
   weight: ["400", "500"],
 });
-
-// TODO: set NEXT_PUBLIC_SITE_URL to the production domain before launch.
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -36,9 +40,10 @@ export async function generateMetadata({
   const d = getDictionary(locale).meta;
 
   return {
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(SITE_URL),
     title: d.title,
     description: d.description,
+    applicationName: SITE_NAME,
     keywords: [
       "enterprise system integration",
       "operational monitoring system",
@@ -52,21 +57,23 @@ export async function generateMetadata({
       "sistem monitoring operasional",
       "sistem informasi manajemen",
     ],
+    // Each language is its own canonical page. Pointing both at "/" would
+    // mark /id as a duplicate of whichever language Googlebot is served at
+    // "/" (English), and the Indonesian page would never be indexed.
     alternates: {
-      canonical: siteUrl,
-      // "/" negotiates the language, so it is the x-default entry point while
-      // /en and /id stay addressable for anyone who wants a fixed language.
-      languages: {
-        en: `${siteUrl}/en`,
-        id: `${siteUrl}/id`,
-        "x-default": siteUrl,
-      },
+      canonical: localeUrl(locale),
+      languages: languageAlternates(),
     },
+    // og:image / twitter:image come from opengraph-image.tsx and
+    // twitter-image.tsx in this segment.
     openGraph: {
       type: "website",
-      url: siteUrl,
-      siteName: "Nexgen",
-      locale: locale === "id" ? "id_ID" : "en_US",
+      url: localeUrl(locale),
+      siteName: SITE_NAME,
+      locale: OG_LOCALE[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map(
+        (l) => OG_LOCALE[l],
+      ),
       title: d.ogTitle,
       description: d.ogDescription,
     },
@@ -75,7 +82,16 @@ export async function generateMetadata({
       title: d.ogTitle,
       description: d.ogDescription,
     },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
   };
 }
 
@@ -99,17 +115,41 @@ export default async function RootLayout({
 
   const d = getDictionary(locale);
 
-  const orgSchema = {
+  const schema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Nexgen",
-    url: siteUrl,
-    description: d.meta.description,
-    knowsAbout: [
-      "Enterprise system integration",
-      "Operational monitoring",
-      "IBM Maximo integration",
-      "Management information systems",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/icon.png`,
+        description: d.meta.description,
+        knowsAbout: [
+          "Enterprise system integration",
+          "Operational monitoring",
+          "IBM Maximo integration",
+          "Management information systems",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_NAME,
+        inLanguage: LOCALES,
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${localeUrl(locale)}#webpage`,
+        url: localeUrl(locale),
+        name: d.meta.title,
+        description: d.meta.description,
+        inLanguage: locale,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+      },
     ],
   };
 
@@ -133,7 +173,7 @@ export default async function RootLayout({
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       </body>
     </html>

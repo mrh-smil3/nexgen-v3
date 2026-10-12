@@ -161,12 +161,13 @@ capabilities rather than outcomes. Keep that constraint when adding content.
 
 ## Before launch
 
-- [ ] `src/app/layout.tsx` — set `NEXT_PUBLIC_SITE_URL` to the production domain.
-- [ ] `src/app/api/contact/route.ts` — wire lead delivery (transactional email or
-      CRM webhook). It currently only logs server-side, so **submissions reach
-      nobody**.
+- [ ] Set `NEXT_PUBLIC_SITE_URL` to the production domain (see `.env.example`).
+      Canonical, hreflang, Open Graph, `robots.txt` and `sitemap.xml` are all
+      built from it; the build warns while it is unset.
+- [x] `src/app/api/contact/route.ts` — leads are verified with Cloudflare
+      Turnstile and delivered to Telegram (`src/lib/telegram.ts`).
 - [ ] `src/components/Footer.tsx` — replace the placeholder email and WhatsApp
       number with real Nexgen contact details.
-- [ ] Add an Open Graph image (`opengraph-image.png` in `src/app/`).
+- [x] Open Graph / Twitter image per locale (`src/app/[locale]/opengraph-image.tsx`).
 - [ ] Point `track()` in `src/lib/analytics.ts` at the real analytics provider;
       it pushes to `window.dataLayer` today.
