@@ -453,6 +453,8 @@ export const en = {
     privacy: "We use this only to prepare for the conversation.",
     submit: "Discuss Your Operation",
     sending: "Sending…",
+    captchaError:
+      "Please complete the security check above before sending, then try again.",
     error:
       "Something went wrong sending your message. Please try again, or email us directly.",
     successTitle: "Message received.",

@@ -4,16 +4,28 @@ import { useState, type FormEvent } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { track } from "@/lib/analytics";
 import Reveal from "./Reveal";
+import Turnstile from "./Turnstile";
+import { TURNSTILE_ACTION_CONTACT } from "@/lib/turnstile-config";
 import type { Dictionary } from "@/lib/i18n";
 
 const field =
   "w-full rounded-lg border border-line bg-tint/[0.025] px-3.5 py-3 text-[14px] text-fg placeholder:text-fg-dim transition-colors focus:border-signal/50 focus:bg-tint/[0.04]";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sending" | "sent" | "error" | "captcha";
 
-export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
+export default function ContactSection({
+  d,
+  turnstileSiteKey,
+  locale,
+}: {
+  d: Dictionary["contact"];
+  turnstileSiteKey?: string;
+  locale: string;
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const [started, setStarted] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [resetKey, setResetKey] = useState(0);
 
   function onFirstInteraction() {
     if (started) return;
@@ -23,6 +35,10 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!token) {
+      setStatus("captcha");
+      return;
+    }
     setStatus("sending");
 
     const data = Object.fromEntries(new FormData(event.currentTarget));
@@ -31,8 +47,12 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, turnstileToken: token }),
       });
+      if (res.status === 403) {
+        setStatus("captcha");
+        return;
+      }
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
       setStatus("sent");
@@ -42,6 +62,10 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
       });
     } catch {
       setStatus("error");
+    } finally {
+      // The token was spent (or rejected) either way; get a fresh one.
+      setToken(null);
+      setResetKey((k) => k + 1);
     }
   }
 
@@ -115,6 +139,7 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 <Field label={d.fields.name} required>
                   <input
                     name="name"
+                    maxLength={120}
                     required
                     autoComplete="name"
                     className={field}
@@ -125,6 +150,7 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 <Field label={d.fields.company} required>
                   <input
                     name="company"
+                    maxLength={160}
                     required
                     autoComplete="organization"
                     className={field}
@@ -132,9 +158,11 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                   />
                 </Field>
 
-                <Field label={d.fields.position}>
+                <Field label={d.fields.position} required>
                   <input
                     name="position"
+                    required
+                    maxLength={120}
                     autoComplete="organization-title"
                     className={field}
                     placeholder={d.fields.positionPlaceholder}
@@ -144,6 +172,7 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 <Field label={d.fields.email} required>
                   <input
                     name="email"
+                    maxLength={200}
                     type="email"
                     required
                     autoComplete="email"
@@ -152,9 +181,11 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                   />
                 </Field>
 
-                <Field label={d.fields.phone}>
+                <Field label={d.fields.phone} required>
                   <input
                     name="phone"
+                    required
+                    maxLength={40}
                     type="tel"
                     autoComplete="tel"
                     className={field}
@@ -162,8 +193,13 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                   />
                 </Field>
 
-                <Field label={d.fields.industry}>
-                  <select name="industry" className={field} defaultValue="">
+                <Field label={d.fields.industry} required>
+                  <select
+                    name="industry"
+                    required
+                    className={field}
+                    defaultValue=""
+                  >
                     <option value="" disabled>
                       {d.fields.industryPlaceholder}
                     </option>
@@ -179,9 +215,15 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                   </select>
                 </Field>
 
-                <Field label={d.fields.systems} className="sm:col-span-2">
+                <Field
+                  label={d.fields.systems}
+                  className="sm:col-span-2"
+                  required
+                >
                   <input
                     name="systems"
+                    required
+                    maxLength={400}
                     className={field}
                     placeholder={d.fields.systemsPlaceholder}
                   />
@@ -194,6 +236,7 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 >
                   <textarea
                     name="challenge"
+                    maxLength={2000}
                     required
                     rows={4}
                     className={`${field} resize-y`}
@@ -201,8 +244,17 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                   />
                 </Field>
 
-                <Field label={d.fields.scope} className="sm:col-span-2">
-                  <select name="scope" className={field} defaultValue="">
+                <Field
+                  label={d.fields.scope}
+                  className="sm:col-span-2"
+                  required
+                >
+                  <select
+                    name="scope"
+                    required
+                    className={field}
+                    defaultValue=""
+                  >
                     <option value="" disabled>
                       {d.fields.scopePlaceholder}
                     </option>
@@ -219,12 +271,26 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 </Field>
               </div>
 
-              {status === "error" ? (
+              {turnstileSiteKey ? (
+                <Turnstile
+                  siteKey={turnstileSiteKey}
+                  action={TURNSTILE_ACTION_CONTACT}
+                  language={locale}
+                  resetKey={resetKey}
+                  onToken={(t) => {
+                    setToken(t);
+                    if (t) setStatus((s) => (s === "captcha" ? "idle" : s));
+                  }}
+                  className="mt-6 min-h-[65px]"
+                />
+              ) : null}
+
+              {status === "error" || status === "captcha" ? (
                 <p
                   role="alert"
                   className="mt-5 rounded-lg border border-alert/35 bg-alert/10 px-4 py-3 text-[13px] text-alert"
                 >
-                  {d.error}
+                  {status === "captcha" ? d.captchaError : d.error}
                 </p>
               ) : null}
 
@@ -234,7 +300,7 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 </p>
                 <button
                   type="submit"
-                  disabled={status === "sending"}
+                  disabled={status === "sending" || !token}
                   className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-signal px-6 py-3.5 text-[14px] font-semibold text-on-signal transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
                   {status === "sending" ? (

@@ -467,6 +467,8 @@ export const id: Dictionary = {
     privacy: "Kami memakainya hanya untuk mempersiapkan diskusi.",
     submit: "Diskusikan Operasional Anda",
     sending: "Mengirim…",
+    captchaError:
+      "Selesaikan verifikasi keamanan di atas sebelum mengirim, lalu coba lagi.",
     error:
       "Terjadi kesalahan saat mengirim pesan Anda. Silakan coba lagi, atau email kami langsung.",
     successTitle: "Pesan diterima.",

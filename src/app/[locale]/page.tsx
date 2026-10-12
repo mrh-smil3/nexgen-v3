@@ -44,7 +44,11 @@ export default async function Home({
         <IntegrationSection d={d.integration} />
         <WhyNexgen d={d.why} />
         <SecondaryServices d={d.digital} />
-        <ContactSection d={d.contact} />
+        <ContactSection
+          d={d.contact}
+          locale={locale}
+          turnstileSiteKey={process.env.CF_TURNSTILE_SITE_KEY}
+        />
       </main>
       <Footer d={d.footer} />
       <MobileCta label={d.nav.cta} />
