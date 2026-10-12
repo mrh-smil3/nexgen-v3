@@ -13,7 +13,8 @@ export type NexgenEvent =
   | "email_click"
   | "scroll_depth"
   | "service_section_interaction"
-  | "nav_cta_click";
+  | "nav_cta_click"
+  | "theme_toggle";
 
 type Payload = Record<string, string | number | boolean>;
 

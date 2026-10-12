@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { LOCALES, isLocale, getDictionary } from "@/lib/i18n";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "../globals.css";
 
 const inter = Inter({
@@ -79,8 +80,11 @@ export async function generateMetadata({
 }
 
 export const viewport: Viewport = {
-  themeColor: "#05070a",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#05070a" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f7fa" },
+  ],
+  colorScheme: "dark light",
 };
 
 export default async function RootLayout({
@@ -110,7 +114,16 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={locale} className={`${inter.variable} ${mono.variable}`}>
+    // suppressHydrationWarning: the pre-paint script sets data-theme on <html>
+    // before React hydrates.
+    <html
+      lang={locale}
+      className={`${inter.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         {/* Reveal animations start at opacity 0 and are driven by an
             IntersectionObserver — without JS the page must still be readable. */}

@@ -18,7 +18,7 @@ function Fan({ direction }: { direction: "out" | "in" }) {
               : `M ${x} 0 C ${x} 26, 300 20, 300 46`
           }
           fill="none"
-          stroke="rgb(62 217 196 / 0.35)"
+          className="stroke-signal/35"
           strokeWidth="1.25"
           vectorEffect="non-scaling-stroke"
         />
@@ -40,8 +40,7 @@ function Stem() {
         y1="0"
         x2="5"
         y2="34"
-        className="flow-dash"
-        stroke="rgb(62 217 196 / 0.5)"
+        className="flow-dash stroke-signal/50"
         strokeWidth="1.5"
         vectorEffect="non-scaling-stroke"
       />
@@ -59,10 +58,10 @@ function Box({
   variant?: "default" | "source" | "core" | "output";
 }) {
   const styles = {
-    default: "border-line bg-white/[0.03] text-fg",
-    source: "border-line-strong bg-white/[0.05] text-fg",
+    default: "border-line bg-tint/[0.03] text-fg",
+    source: "border-line-strong bg-tint/[0.05] text-fg",
     core: "border-signal/40 bg-signal/[0.09] text-signal",
-    output: "border-line-strong bg-white/[0.035] text-fg",
+    output: "border-line-strong bg-tint/[0.035] text-fg",
   } as const;
 
   return (

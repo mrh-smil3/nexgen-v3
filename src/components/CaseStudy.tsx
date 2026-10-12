@@ -89,7 +89,7 @@ export default function CaseStudy({ d }: { d: Dictionary["caseStudy"] }) {
                       {d.monitoringAreas.map((area) => (
                         <li
                           key={area}
-                          className="rounded-md border border-line bg-white/[0.03] px-2.5 py-1.5 text-[12px] text-fg-muted"
+                          className="rounded-md border border-line bg-tint/[0.03] px-2.5 py-1.5 text-[12px] text-fg-muted"
                         >
                           {area}
                         </li>
@@ -107,7 +107,7 @@ export default function CaseStudy({ d }: { d: Dictionary["caseStudy"] }) {
                 href="#contact"
                 event="case_study_cta"
                 payload={{ id: "maximo_overhaul" }}
-                className="group mt-6 inline-flex items-center gap-2 rounded-full border border-line-strong bg-white/[0.03] px-6 py-3.5 text-[14px] font-medium text-fg transition-colors hover:border-signal/40 hover:bg-signal/[0.06]"
+                className="group mt-6 inline-flex items-center gap-2 rounded-full border border-line-strong bg-tint/[0.03] px-6 py-3.5 text-[14px] font-medium text-fg transition-colors hover:border-signal/40 hover:bg-signal/[0.06]"
               >
                 {d.cta}
                 <ArrowUpRight

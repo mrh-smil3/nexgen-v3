@@ -73,7 +73,7 @@ export default function IntegrationSection({
                   {[...STACK, ...STACK].map((tech, i) => (
                     <span
                       key={`${tech}-${i}`}
-                      className="rounded-lg border border-line bg-white/[0.025] px-3.5 py-2 font-mono text-[11.5px] whitespace-nowrap text-fg-muted"
+                      className="rounded-lg border border-line bg-tint/[0.025] px-3.5 py-2 font-mono text-[11.5px] whitespace-nowrap text-fg-muted"
                     >
                       {tech}
                     </span>

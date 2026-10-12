@@ -15,7 +15,7 @@ export default function WhyNexgen({ d }: { d: Dictionary["why"] }) {
       <ul className="mt-14 border-t border-line">
         {d.values.map((value, i) => (
           <Reveal as="li" key={value.title} delay={i * 70}>
-            <div className="group grid gap-3 border-b border-line py-7 transition-colors hover:bg-white/[0.018] md:grid-cols-12 md:gap-8 md:px-4">
+            <div className="group grid gap-3 border-b border-line py-7 transition-colors hover:bg-tint/[0.018] md:grid-cols-12 md:gap-8 md:px-4">
               <div className="flex items-baseline gap-4 md:col-span-5">
                 <span className="mono-label text-signal/70 transition-colors group-hover:!text-signal">
                   {String(i + 1).padStart(2, "0")}

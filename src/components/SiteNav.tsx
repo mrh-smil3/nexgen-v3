@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
 import Logo from "./Logo";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 import { track } from "@/lib/analytics";
 import type { Dictionary } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n/config";
@@ -69,6 +70,8 @@ export default function SiteNav({
               className="hidden sm:flex"
             />
 
+            <ThemeToggle label={d.themeLabel} />
+
             <a
               href="#contact"
               onClick={() => track("nav_cta_click")}
@@ -118,7 +121,7 @@ export default function SiteNav({
               setOpen(false);
               track("nav_cta_click", { source: "mobile_menu" });
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-signal px-5 py-3.5 text-sm font-semibold text-ink-950"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-signal px-5 py-3.5 text-sm font-semibold text-on-signal"
           >
             {d.cta}
             <ArrowRight size={15} strokeWidth={2.4} />

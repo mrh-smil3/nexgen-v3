@@ -40,7 +40,7 @@ export default function CapabilitiesSection({
           return (
             <Reveal key={cap.title} delay={(i % 3) * 80}>
               <article className="glass glass-hover flex h-full flex-col p-6">
-                <span className="grid h-11 w-11 place-items-center rounded-xl border border-line bg-white/[0.04]">
+                <span className="grid h-11 w-11 place-items-center rounded-xl border border-line bg-tint/[0.04]">
                   <Icon size={19} className="text-signal" strokeWidth={1.8} />
                 </span>
 
@@ -55,7 +55,7 @@ export default function CapabilitiesSection({
                   {cap.tags.map((tag) => (
                     <li
                       key={tag}
-                      className="rounded-md border border-line bg-white/[0.02] px-2 py-1 font-mono text-[10.5px] tracking-wide text-fg-dim"
+                      className="rounded-md border border-line bg-tint/[0.02] px-2 py-1 font-mono text-[10.5px] tracking-wide text-fg-dim"
                     >
                       {tag}
                     </li>

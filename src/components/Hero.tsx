@@ -30,7 +30,7 @@ export default function Hero({
               and push the whole hero wider than the viewport. */}
           <div className="min-w-0 lg:col-span-5">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white/[0.03] px-3 py-1.5 backdrop-blur-sm">
+              <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-tint/[0.03] px-3 py-1.5 backdrop-blur-sm">
                 <span className="blip h-1.5 w-1.5 rounded-full bg-signal" />
                 <span className="mono-label !text-fg-muted">{d.eyebrow}</span>
               </span>
@@ -56,7 +56,7 @@ export default function Hero({
                   href="#case-study"
                   event="hero_cta_click"
                   payload={{ cta: "explore_our_work" }}
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-signal px-6 py-3.5 text-[14px] font-semibold text-ink-950 transition-transform hover:-translate-y-0.5"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-signal px-6 py-3.5 text-[14px] font-semibold text-on-signal transition-transform hover:-translate-y-0.5"
                 >
                   {d.ctaPrimary}
                   <ArrowRight
@@ -70,7 +70,7 @@ export default function Hero({
                   href="#contact"
                   event="hero_cta_click"
                   payload={{ cta: "discuss_your_operation" }}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-white/[0.03] px-6 py-3.5 text-[14px] font-medium text-fg backdrop-blur-sm transition-colors hover:border-signal/40 hover:bg-signal/[0.06]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-tint/[0.03] px-6 py-3.5 text-[14px] font-medium text-fg backdrop-blur-sm transition-colors hover:border-signal/40 hover:bg-signal/[0.06]"
                 >
                   <MessageSquareText size={16} strokeWidth={2} />
                   {d.ctaSecondary}

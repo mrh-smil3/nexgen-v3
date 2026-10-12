@@ -13,9 +13,9 @@ function Node({
   tone?: "default" | "signal" | "muted";
 }) {
   const tones = {
-    default: "border-line-strong bg-white/[0.035] text-fg",
+    default: "border-line-strong bg-tint/[0.035] text-fg",
     signal: "border-signal/40 bg-signal/[0.08] text-signal",
-    muted: "border-line bg-white/[0.02] text-fg-muted",
+    muted: "border-line bg-tint/[0.02] text-fg-muted",
   } as const;
 
   return (
@@ -83,7 +83,7 @@ export default function OperationalGap({ d }: { d: Dictionary["gap"] }) {
                   key={x}
                   d={`M ${x} 0 C ${x} 30, 300 24, 300 54`}
                   fill="none"
-                  stroke="rgb(148 163 184 / 0.4)"
+                  className="stroke-rule/40"
                   strokeWidth="1.25"
                   vectorEffect="non-scaling-stroke"
                 />
@@ -100,7 +100,7 @@ export default function OperationalGap({ d }: { d: Dictionary["gap"] }) {
                 className="rounded-lg border border-dashed border-amber/45 px-5 py-6 text-center"
                 style={{
                   backgroundImage:
-                    "repeating-linear-gradient(-45deg, rgb(240 168 60 / 0.07) 0px, rgb(240 168 60 / 0.07) 1px, transparent 1px, transparent 9px)",
+                    "repeating-linear-gradient(-45deg, color-mix(in srgb, var(--color-amber) 7%, transparent) 0px, color-mix(in srgb, var(--color-amber) 7%, transparent) 1px, transparent 1px, transparent 9px)",
                 }}
               >
                 <p className="mono-label !text-amber">{d.gapLabel}</p>

@@ -17,13 +17,13 @@ export default function Logo({ className = "" }: { className?: string }) {
           width="24.5"
           height="24.5"
           rx="5"
-          stroke="rgb(148 163 184 / 0.28)"
+          className="stroke-rule/28"
         />
-        <path d="M6 8.5h14" stroke="rgb(148 163 184 / 0.55)" strokeWidth="1.3" />
-        <rect x="6" y="11.7" width="14" height="2.9" rx="1.1" fill="#3ed9c4" />
+        <path d="M6 8.5h14" className="stroke-rule/55" strokeWidth="1.3" />
+        <rect x="6" y="11.7" width="14" height="2.9" rx="1.1" className="fill-signal" />
         <path
           d="M6 17.9h14"
-          stroke="rgb(148 163 184 / 0.55)"
+          className="stroke-rule/55"
           strokeWidth="1.3"
         />
       </svg>

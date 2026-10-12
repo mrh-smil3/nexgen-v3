@@ -22,6 +22,7 @@ export const en = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     languageLabel: "Language",
+    themeLabel: "Switch light / dark mode",
     links: [
       { href: "#approach", label: "Solutions" },
       { href: "#industries", label: "Industries" },

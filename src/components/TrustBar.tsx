@@ -24,7 +24,7 @@ export default function TrustBar({ d }: { d: Dictionary["trust"] }) {
                 delay={i * 70}
                 className="flex items-start gap-3.5 bg-ink-900 px-4 py-7 sm:px-6"
               >
-                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-line bg-white/[0.03]">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-line bg-tint/[0.03]">
                   <Icon size={16} className="text-signal" strokeWidth={1.9} />
                 </span>
                 <div className="min-w-0">

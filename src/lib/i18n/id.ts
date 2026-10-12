@@ -31,6 +31,7 @@ export const id: Dictionary = {
     openMenu: "Buka menu",
     closeMenu: "Tutup menu",
     languageLabel: "Bahasa",
+    themeLabel: "Ganti mode terang / gelap",
     links: [
       { href: "#approach", label: "Solusi" },
       { href: "#industries", label: "Industri" },

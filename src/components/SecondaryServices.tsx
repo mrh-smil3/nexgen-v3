@@ -33,7 +33,7 @@ export default function SecondaryServices({
             {d.services.map((service) => (
               <li
                 key={service}
-                className="rounded-lg border border-line bg-white/[0.02] px-4 py-3.5 text-[13px] text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+                className="rounded-lg border border-line bg-tint/[0.02] px-4 py-3.5 text-[13px] text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
               >
                 {service}
               </li>

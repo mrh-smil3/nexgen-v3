@@ -119,11 +119,11 @@ export default function LiveDashboard({ d }: { d: Dictionary["console"] }) {
             </div>
             <div className="flex items-center gap-4">
               <Legend
-                color="rgb(148 163 184 / 0.55)"
+                color="color-mix(in srgb, var(--color-rule) 55%, transparent)"
                 label={d.legendPlan}
                 dashed
               />
-              <Legend color="#3ed9c4" label={d.legendActual} />
+              <Legend color="var(--color-signal)" label={d.legendActual} />
             </div>
           </div>
 
@@ -137,8 +137,8 @@ export default function LiveDashboard({ d }: { d: Dictionary["console"] }) {
             >
               <defs>
                 <linearGradient id="nx-area" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#3ed9c4" stopOpacity="0.28" />
-                  <stop offset="100%" stopColor="#3ed9c4" stopOpacity="0" />
+                  <stop offset="0%" style={{ stopColor: "var(--color-signal)" }} stopOpacity="0.28" />
+                  <stop offset="100%" style={{ stopColor: "var(--color-signal)" }} stopOpacity="0" />
                 </linearGradient>
               </defs>
 
@@ -149,7 +149,7 @@ export default function LiveDashboard({ d }: { d: Dictionary["console"] }) {
                   x2={W}
                   y1={H * g}
                   y2={H * g}
-                  stroke="rgb(148 163 184 / 0.12)"
+                  className="stroke-rule/12"
                   strokeWidth="1"
                   vectorEffect="non-scaling-stroke"
                 />
@@ -160,7 +160,7 @@ export default function LiveDashboard({ d }: { d: Dictionary["console"] }) {
               <path
                 d={planPath}
                 fill="none"
-                stroke="rgb(148 163 184 / 0.5)"
+                className="stroke-rule/50"
                 strokeWidth="1.5"
                 strokeDasharray="4 5"
                 vectorEffect="non-scaling-stroke"
@@ -169,7 +169,7 @@ export default function LiveDashboard({ d }: { d: Dictionary["console"] }) {
               <path
                 d={actualPath}
                 fill="none"
-                stroke="#3ed9c4"
+                className="stroke-signal"
                 strokeWidth="2"
                 strokeLinecap="round"
                 vectorEffect="non-scaling-stroke"
@@ -180,7 +180,7 @@ export default function LiveDashboard({ d }: { d: Dictionary["console"] }) {
                 x2={headX}
                 y1="0"
                 y2={H}
-                stroke="rgb(62 217 196 / 0.35)"
+                className="stroke-signal/35"
                 strokeWidth="1"
                 strokeDasharray="3 4"
                 vectorEffect="non-scaling-stroke"
@@ -273,7 +273,7 @@ function Legend({
           y1="1"
           x2="16"
           y2="1"
-          stroke={color}
+          style={{ stroke: color }}
           strokeWidth="2"
           strokeDasharray={dashed ? "3 3" : undefined}
         />

@@ -7,7 +7,7 @@ import Reveal from "./Reveal";
 import type { Dictionary } from "@/lib/i18n";
 
 const field =
-  "w-full rounded-lg border border-line bg-white/[0.025] px-3.5 py-3 text-[14px] text-fg placeholder:text-fg-dim transition-colors focus:border-signal/50 focus:bg-white/[0.04]";
+  "w-full rounded-lg border border-line bg-tint/[0.025] px-3.5 py-3 text-[14px] text-fg placeholder:text-fg-dim transition-colors focus:border-signal/50 focus:bg-tint/[0.04]";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -235,7 +235,7 @@ export default function ContactSection({ d }: { d: Dictionary["contact"] }) {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-signal px-6 py-3.5 text-[14px] font-semibold text-ink-950 transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-signal px-6 py-3.5 text-[14px] font-semibold text-on-signal transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
                   {status === "sending" ? (
                     <>

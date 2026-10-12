@@ -27,7 +27,7 @@ export default function IndustriesSection({
             <Reveal key={industry.name} delay={(i % 3) * 80}>
               <article className="glass glass-hover flex h-full flex-col p-6">
                 <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line bg-white/[0.04]">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line bg-tint/[0.04]">
                     <Icon size={18} className="text-signal" strokeWidth={1.8} />
                   </span>
                   <h3 className="text-[15.5px] font-semibold text-fg">

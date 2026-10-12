@@ -20,8 +20,7 @@ function Connector() {
           y1="0"
           x2="50%"
           y2="100%"
-          className="flow-dash lg:hidden"
-          stroke="rgb(62 217 196 / 0.5)"
+          className="flow-dash stroke-signal/50 lg:hidden"
           strokeWidth="1.5"
         />
         <line
@@ -29,8 +28,7 @@ function Connector() {
           y1="50%"
           x2="100%"
           y2="50%"
-          className="flow-dash hidden lg:block"
-          stroke="rgb(62 217 196 / 0.5)"
+          className="flow-dash hidden stroke-signal/50 lg:block"
           strokeWidth="1.5"
         />
       </svg>
@@ -56,7 +54,7 @@ export default function FlowRail({ d }: { d: Dictionary["flowRail"] }) {
                 className={`min-w-0 rounded-xl border px-4 py-3 text-center backdrop-blur-sm lg:flex-1 lg:text-left ${
                   accent
                     ? "border-signal/35 bg-signal/[0.07]"
-                    : "border-line bg-white/[0.025]"
+                    : "border-line bg-tint/[0.025]"
                 }`}
               >
                 <p

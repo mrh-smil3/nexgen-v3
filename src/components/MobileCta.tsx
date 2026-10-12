@@ -28,7 +28,7 @@ export default function MobileCta({ label }: { label: string }) {
       <a
         href="#contact"
         onClick={() => track("hero_cta_click", { cta: "sticky_mobile" })}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-signal px-5 py-3.5 text-[14px] font-semibold text-ink-950"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-signal px-5 py-3.5 text-[14px] font-semibold text-on-signal"
       >
         {label}
         <ArrowRight size={16} strokeWidth={2.4} />
